@@ -326,6 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641574809}
   - component: {fileID: 641574811}
+  - component: {fileID: 641574810}
   m_Layer: 7
   m_Name: WeaponCam
   m_TagString: Untagged
@@ -347,6 +348,40 @@ Transform:
   m_Father: {fileID: 963194228}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &641574810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641574808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!20 &641574811
 Camera:
   m_ObjectHideFlags: 0
@@ -660,10 +695,6 @@ MonoBehaviour:
   ReloadTime: 3
   FireRate: 1
   Shell: {fileID: 8992320538009537907}
-  Magnitude: 2
-  Roughness: 1
-  FadeInTime: 0.1
-  FadeOutTime: 0.3
   ScopePositionRig: {fileID: 1173035192}
   ScopeRotationRig: {fileID: 1173035193}
   DampTime: 0.05
@@ -671,8 +702,6 @@ MonoBehaviour:
   BulletLifeTime: 10
   Gravity: -6
   Wind: -4
-  Intensity: 2
-  Duration: 0.1
 --- !u!95 &963194230
 Animator:
   serializedVersion: 3

@@ -40,13 +40,6 @@ public class CameraController : MonoBehaviour
     private float NextTimeToFire = 0f;
     public ParticleSystem Shell;
     [Space(10)]
-    [Header("Camera Shake")]
-    public float Magnitude;
-    public float Roughness;
-    public float FadeInTime;
-    public float FadeOutTime;
-
-    [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
     public MultiRotationConstraint ScopeRotationRig;
@@ -59,10 +52,6 @@ public class CameraController : MonoBehaviour
     [Header("Gravity And Wind ")]
     public float Gravity;
     public float Wind;
-    [Space(10)]
-    [Header("Recoil")]
-    public float Intensity;
-    public float Duration;
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -171,7 +160,7 @@ public class CameraController : MonoBehaviour
             Destroy(Bullet, BulletLifeTime);
         }
         animator.SetBool("Bolt",true);
-        yield return new WaitForSeconds(1f - 0.25f);
+        yield return new WaitForSeconds(0.5f - 0.25f);
         animator.SetBool("Bolt", false);
         yield return new WaitForSeconds(0.25f);
     }
