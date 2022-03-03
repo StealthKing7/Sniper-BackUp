@@ -23,9 +23,13 @@ public class CameraController : MonoBehaviour
     public Camera ScopeCam;
     private float scrollWheel = 9f;
     private Camera cam;
-    public Recoil recoil;
+    private Recoil recoil;
     private PostProcessVolume volume;
     private DepthOfField blur;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private float timeout;
     [Space(10)]
     [Header("Shooting Properties")]
     public float Range;
@@ -127,6 +131,7 @@ public class CameraController : MonoBehaviour
         string Storedammo = StoredAmmo.ToString();
         string current = CurrentAmmo.ToString();
         ammo.text = current + "\n" + Storedammo;
+        
     }
     void FixedUpdate()
     {
@@ -138,9 +143,23 @@ public class CameraController : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
 
     }
+    public void EnableBullet()
+    {
+        bullet.SetActive(true);
+    }
+    public void DisableBullet()
+    {
+        bullet.SetActive(false);
+    }
     public void ShellPlay ()
     {
         Shell.Play();
+    }
+    void TimeOut()
+    {
+        float time = timeout;
+        time -= Time.deltaTime;
+        animator.SetFloat("TimeOut", time);
     }
     IEnumerator Shoot()
     {
