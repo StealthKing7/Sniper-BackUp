@@ -177,6 +177,11 @@ public class CameraController : MonoBehaviour
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed);
             Destroy(Bullet, BulletLifeTime);
+            EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                Debug.Log("Hit");
+            }
         }
         animator.SetBool("Bolt",true);
         yield return new WaitForSeconds(0.5f - 0.25f);
