@@ -1804,7 +1804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ed7b4d921607d449314944161f3bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ragdoll: []
 --- !u!136 &727913349
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2082,6 +2081,7 @@ MonoBehaviour:
   DampTime: 0.05
   bulletSpeed: 900
   BulletLifeTime: 10
+  Force: {x: 0, y: 0, z: -100}
   Gravity: -6
   Wind: -4
 --- !u!95 &963194230

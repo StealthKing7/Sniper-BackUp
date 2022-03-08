@@ -7,11 +7,13 @@ public class EnemyAI : MonoBehaviour
 {
     private List<Rigidbody> Ragdoll = new List<Rigidbody>();
     private NavMeshAgent agent;
+    private Animator animator;
 
     void Awake()
     {
         SetRagDollOff();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
     void SetRagDollOff()
     {
@@ -31,10 +33,12 @@ public class EnemyAI : MonoBehaviour
         {
             r.isKinematic = false;
         }
+        animator.enabled = false;
+        agent.isStopped = true;
     }
     // Update is called once per frame
     void Update()
     {
-     //agent.SetDestination(Vector3.zero);
+        agent.SetDestination(Vector3.zero);
     }
 }

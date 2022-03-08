@@ -5,11 +5,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float bulletSpeed;
-
+    private Vector3 force;
     private Rigidbody rb;
-    public void Initialized(float speed)
+    public void Initialized(float speed,Vector3 _force)
     {
         bulletSpeed = speed;
+        force = _force;
     }
     private void Awake()
     { 
@@ -22,5 +23,6 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+
     }
 }

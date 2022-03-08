@@ -50,8 +50,12 @@ public class CameraController : MonoBehaviour
     public float DampTime;
     [Space(10)]
     [Header("Bullet Proaperties")]
+    [SerializeField]
     public float bulletSpeed;
+    [SerializeField]
     public float BulletLifeTime;
+    [SerializeField]
+    private Vector3 Force;
     [Space(10)]
     [Header("Gravity And Wind ")]
     public float Gravity;
@@ -175,13 +179,18 @@ public class CameraController : MonoBehaviour
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
             GameObject Bullet = Instantiate(BulletPf, firePosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             Bullet bullet = Bullet.GetComponent<Bullet>();
-            bullet.Initialized(bulletSpeed);
+            bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
             EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
                 enemyAI.TrunOnRagdoll();
+                Rigidbody[] rbs = hit.transform.GetComponentsInChildren<Rigidbody>();
+                foreach (Rigidbody rb in rbs)
+                {
+                    rb.AddForce(Force);
+                }
             }
         }
         animator.SetBool("Bolt",true);
