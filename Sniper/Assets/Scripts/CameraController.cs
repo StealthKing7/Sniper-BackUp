@@ -181,6 +181,7 @@ public class CameraController : MonoBehaviour
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
+                enemyAI.TrunOnRagdoll();
             }
         }
         animator.SetBool("Bolt",true);
