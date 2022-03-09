@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     {
         SetRagDollOff();
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
     void SetRagDollOff()
     {

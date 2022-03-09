@@ -181,16 +181,16 @@ public class CameraController : MonoBehaviour
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
-            EnemyAI enemyAI = hit.transform.GetComponentInParent<EnemyAI>();
+            EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
+            /*if (hit.transform.gameObject.name == "Head")
+            {
+                Debug.Log("HeadShot");
+            }*/
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
-                if (hit.collider.gameObject.name == "Head")
-                {
-                    Debug.Log("HeadShot");
-                }
                 enemyAI.TrunOnRagdoll();
-                Rigidbody[] rbs = hit.transform.GetComponentsInChildren<Rigidbody>();
+                Rigidbody[] rbs = enemyAI.GetComponentsInChildren<Rigidbody>();
                 foreach (Rigidbody rb in rbs)
                 {
                     rb.AddForce(Force);
