@@ -182,10 +182,10 @@ public class CameraController : MonoBehaviour
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
             EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
-            /*if (hit.transform.gameObject.name == "Head")
+            if (hit.transform.gameObject.name == "Head")
             {
                 Debug.Log("HeadShot");
-            }*/
+            }
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
