@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance { get; private set; }
     private GameObject Sniper;
     private bool isScoped = false;
     private float xrot = 0;
@@ -30,6 +31,7 @@ public class CameraController : MonoBehaviour
     private GameObject bullet;
     [SerializeField]
     private float timeout;
+    [SerializeField]
     [Space(10)]
     [Header("Shooting Properties")]
     public float Range;
@@ -43,6 +45,7 @@ public class CameraController : MonoBehaviour
     private float CurrentAmmo;
     private float NextTimeToFire = 0f;
     public ParticleSystem Shell;
+    public bool HadFired;
     [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
@@ -62,6 +65,7 @@ public class CameraController : MonoBehaviour
     public float Wind;
     void Awake()
     {
+        Instance = this;
         cam = GetComponent<Camera>();
         animator = GetComponent<Animator>();
         volume = GetComponent<PostProcessVolume>();
@@ -126,6 +130,7 @@ public class CameraController : MonoBehaviour
             recoil.Fire();
             NextTimeToFire = Time.time + 1f / FireRate;
             StartCoroutine(Shoot());
+            HadFired = true;
         }
         if(CurrentAmmo == 0 || (Input.GetKeyDown(KeyCode.R) && CurrentAmmo < maxAmmo))
         {
@@ -182,10 +187,10 @@ public class CameraController : MonoBehaviour
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
             EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
-            if (hit.transform.gameObject.name == "Head")
+            /*if (hit.collider == enemyAI.gameObject.GetComponent<SphereCollider>())
             {
                 Debug.Log("HeadShot");
-            }
+            }*/
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
