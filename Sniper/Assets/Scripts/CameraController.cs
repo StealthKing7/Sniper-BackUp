@@ -59,10 +59,6 @@ public class CameraController : MonoBehaviour
     public float BulletLifeTime;
     [SerializeField]
     private Vector3 Force;
-    [Space(10)]
-    [Header("Gravity And Wind ")]
-    public float Gravity;
-    public float Wind;
     void Awake()
     {
         Instance = this;
@@ -130,7 +126,7 @@ public class CameraController : MonoBehaviour
             recoil.Fire();
             NextTimeToFire = Time.time + 1f / FireRate;
             StartCoroutine(Shoot());
-            HadFired = true;
+
         }
         if(CurrentAmmo == 0 || (Input.GetKeyDown(KeyCode.R) && CurrentAmmo < maxAmmo))
         {
@@ -172,6 +168,7 @@ public class CameraController : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        HadFired = true;
         CurrentAmmo--;
         Vector3 mousePos = Vector3.zero;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
@@ -179,7 +176,6 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Range, layer))
         {
             mousePos += hit.point;
-            mousePos += new Vector3(Wind, Gravity);
             Vector3 aimDir = (mousePos - firePosition.position).normalized;
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
             GameObject Bullet = Instantiate(BulletPf, firePosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
@@ -187,10 +183,6 @@ public class CameraController : MonoBehaviour
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
             EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
-            /*if (hit.collider == enemyAI.gameObject.GetComponent<SphereCollider>())
-            {
-                Debug.Log("HeadShot");
-            }*/
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
@@ -217,5 +209,10 @@ public class CameraController : MonoBehaviour
         CurrentAmmo = maxAmmo;
         StoredAmmo -= maxAmmo;
         isReloading = false;
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Range);
     }
 }

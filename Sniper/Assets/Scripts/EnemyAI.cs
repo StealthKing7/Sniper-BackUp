@@ -10,11 +10,18 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private float Range;
+    private CameraController cameraController;
+    [SerializeField]
+    private Transform target;
+    [SerializeField]
+    private float speed;
     void Awake()
     {
+        cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
         SetRagDollOff();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        agent.speed = speed;
     }
     void SetRagDollOff()
     {
@@ -40,13 +47,12 @@ public class EnemyAI : MonoBehaviour
     
     void Update()
     {
-
-        if (CameraController.Instance.HadFired)
+        float dis = Vector3.Distance(transform.position, cameraController.gameObject.transform.position);
+        if (cameraController.HadFired == true && dis <= cameraController.Range)
         {
-            agent.SetDestination(new Vector3(100f, 100f, 100f));
+            agent.SetDestination(target.position);
             animator.SetBool("Run", true);
         }
-
     }
     void OnDrawGizmos()
     {
