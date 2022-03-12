@@ -191,6 +191,14 @@ public class CameraController : MonoBehaviour
     {
         FindObjectOfType<SoundManeger>().Play("Bolt Back");
     }
+    void BoltForward()
+    {
+        FindObjectOfType<SoundManeger>().Play("Bolt Forward");
+    }
+    void BoltDown()
+    {
+        FindObjectOfType<SoundManeger>().Play("Bolt Down");
+    }
     IEnumerator Reload()
     {
         isReloading = true;

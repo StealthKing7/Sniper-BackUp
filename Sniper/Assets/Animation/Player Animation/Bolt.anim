@@ -5897,7 +5897,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.4
+  - time: 0.41666666
     functionName: BoltUp
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -5913,6 +5913,20 @@ AnimationClip:
     messageOptions: 0
   - time: 0.6
     functionName: ShellPlay
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.65
+    functionName: BoltForward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8333333
+    functionName: BoltDown
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
