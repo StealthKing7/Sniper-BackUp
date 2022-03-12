@@ -8,7 +8,6 @@ public class Sound
     public AudioClip clip;
     public float pitch;
     public float volume;
-    public float stereopan;
     [HideInInspector]
     public AudioSource audioSource;
 }

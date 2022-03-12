@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManeger : MonoBehaviour
@@ -18,7 +17,6 @@ public class SoundManeger : MonoBehaviour
             s.audioSource.clip = s.clip;
             s.audioSource.volume = s.volume;
             s.audioSource.pitch = s.pitch;
-            s.audioSource.panStereo = s.stereopan;
         }
     }
     public void Play(string name)

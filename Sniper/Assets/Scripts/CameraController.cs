@@ -1,6 +1,5 @@
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Animations.Rigging;
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
@@ -20,7 +19,6 @@ public class CameraController : MonoBehaviour
     public GameObject crosshair;
     private Animator animator;
     public Text ammo;
-    public float StoredAmmo;
     public Camera ScopeCam;
     private float scrollWheel = 9f;
     private Camera cam;
@@ -44,6 +42,7 @@ public class CameraController : MonoBehaviour
     private float NextTimeToFire = 0f;
     public ParticleSystem Shell;
     public bool HadFired;
+    private SoundManeger soundManeger;
     [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
@@ -59,6 +58,7 @@ public class CameraController : MonoBehaviour
     private Vector3 Force;
     void Awake()
     {
+        soundManeger = FindObjectOfType<SoundManeger>();
         Instance = this;
         cam = GetComponent<Camera>();
         animator = GetComponent<Animator>();
@@ -72,10 +72,6 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         CurrentAmmo = maxAmmo;
         ammo.text = CurrentAmmo.ToString();
-        StoredAmmo = maxAmmo * 6f;
-        string Storedammo = StoredAmmo.ToString();
-        string current = CurrentAmmo.ToString();
-        ammo.text = current + "\n" + Storedammo;
         recoil = Sniper.GetComponent<Recoil>();
     }
     void Update()
@@ -131,10 +127,6 @@ public class CameraController : MonoBehaviour
             ScopeWeight = 0;
             StartCoroutine(Reload());
         }
-        string Storedammo = StoredAmmo.ToString();
-        string current = CurrentAmmo.ToString();
-        ammo.text = current + "\n" + Storedammo;
-        
     }
     void FixedUpdate()
     {
@@ -185,19 +177,27 @@ public class CameraController : MonoBehaviour
     }
     void BoltUp()
     {
-        FindObjectOfType<SoundManeger>().Play("Bolt up");
+        soundManeger.Play("Bolt up");
     }
     void BoltBack()
     {
-        FindObjectOfType<SoundManeger>().Play("Bolt Back");
+        soundManeger.Play("Bolt Back");
     }
     void BoltForward()
     {
-        FindObjectOfType<SoundManeger>().Play("Bolt Forward");
+        soundManeger.Play("Bolt Forward");
     }
     void BoltDown()
     {
-        FindObjectOfType<SoundManeger>().Play("Bolt Down");
+        soundManeger.Play("Bolt Down");
+    }
+    void MagzineOut()
+    {
+        soundManeger.Play("Magine Out");
+    }
+    void MagzineIn()
+    {
+        soundManeger.Play("Magine In");
     }
     IEnumerator Reload()
     {
@@ -207,7 +207,6 @@ public class CameraController : MonoBehaviour
         animator.SetBool("Reload", false);
         yield return new WaitForSeconds(0.25f); 
         CurrentAmmo = maxAmmo;
-        StoredAmmo -= maxAmmo;
         isReloading = false;
     }
     void OnDrawGizmos()
