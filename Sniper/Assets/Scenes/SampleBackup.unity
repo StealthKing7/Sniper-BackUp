@@ -341,9 +341,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - clip: {fileID: 0}
-    pitch: 0
-    volume: 0
+  - name: Bolt up
+    clip: {fileID: 8300000, guid: d25be45b28b9b7047ab819714c910c59, type: 3}
+    pitch: 3
+    volume: 10
     audioSource: {fileID: 0}
 --- !u!4 &517207862
 Transform:
@@ -499,11 +500,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &683521714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8819835712235137778, guid: 14065d182b95cf04e810487f329ecc59, type: 3}
-  m_PrefabInstance: {fileID: 8992320538009537906}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,7 +1071,6 @@ MonoBehaviour:
   ammo: {fileID: 1147461231}
   StoredAmmo: 0
   ScopeCam: {fileID: 245960678}
-  bullet: {fileID: 683521714}
   timeout: 5
   Range: 400
   BulletPf: {fileID: 521768602913664210, guid: 20d06170f1c300148acb10878e74f6d3, type: 3}

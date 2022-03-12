@@ -28,8 +28,6 @@ public class CameraController : MonoBehaviour
     private PostProcessVolume volume;
     private DepthOfField blur;
     [SerializeField]
-    private GameObject bullet;
-    [SerializeField]
     private float timeout;
     [SerializeField]
     [Space(10)]
@@ -148,23 +146,9 @@ public class CameraController : MonoBehaviour
         player.Rotate(Vector3.up * mouseX);
 
     }
-    public void EnableBullet()
-    {
-        bullet.SetActive(true);
-    }
-    public void DisableBullet()
-    {
-        bullet.SetActive(false);
-    }
     public void ShellPlay ()
     {
         Shell.Play();
-    }
-    void TimeOut()
-    {
-        float time = timeout;
-        time -= Time.deltaTime;
-        animator.SetFloat("TimeOut", time);
     }
     IEnumerator Shoot()
     {
@@ -198,6 +182,10 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(0.5f - 0.25f);
         animator.SetBool("Bolt", false);
         yield return new WaitForSeconds(0.25f);
+    }
+    void BoltUp()
+    {
+        FindObjectOfType<SoundManeger>().Play("Bolt Up");
     }
     IEnumerator Reload()
     {
