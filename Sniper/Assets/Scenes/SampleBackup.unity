@@ -343,8 +343,15 @@ MonoBehaviour:
   sounds:
   - name: Bolt up
     clip: {fileID: 8300000, guid: d25be45b28b9b7047ab819714c910c59, type: 3}
-    pitch: 3
-    volume: 10
+    pitch: 1
+    volume: 1
+    stereopan: 0.5
+    audioSource: {fileID: 0}
+  - name: Bolt Back
+    clip: {fileID: 8300000, guid: 3658ba763c17c9a40ae4315f43f886ad, type: 3}
+    pitch: 1
+    volume: 1
+    stereopan: 0.5
     audioSource: {fileID: 0}
 --- !u!4 &517207862
 Transform:

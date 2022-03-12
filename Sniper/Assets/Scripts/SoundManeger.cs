@@ -12,12 +12,13 @@ public class SoundManeger : MonoBehaviour
         {
             GameObject sound = new GameObject();
             sound.transform.SetParent(gameObject.transform);
-            sound.name = s.clip.ToString() + " " + "Sound";
+            sound.name = s.name + " " + "Sound";
             sound.transform.position = Vector3.zero;
             s.audioSource = sound.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
             s.audioSource.volume = s.volume;
             s.audioSource.pitch = s.pitch;
+            s.audioSource.panStereo = s.stereopan;
         }
     }
     public void Play(string name)
