@@ -72,10 +72,17 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         CurrentAmmo = maxAmmo;
         ammo.text = CurrentAmmo.ToString();
-        recoil = Sniper.GetComponent<Recoil>();
+        recoil = Sniper.GetComponent<Recoil>();             
     }
     void Update()
     {
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * Sencitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * Sencitivity;
+        xrot -= mouseY;
+        xrot = Mathf.Clamp(xrot, -90f, 90);
+        holder.localRotation = Quaternion.Euler(xrot, 0f, 0f);
+        player.Rotate(Vector3.up * mouseX);
+
         float zoomChange = 9;
         if (Input.GetButtonDown("Fire2"))
         {
@@ -90,6 +97,26 @@ public class CameraController : MonoBehaviour
         if(Input.mouseScrollDelta.y < 0)
         {
             scrollWheel += zoomChange * DampTime;
+        }
+        
+        if (Input.GetButtonDown("Fire1") && CurrentAmmo > 0 && isReloading == false && Time.time >= NextTimeToFire)
+        {
+            recoil.Fire();
+            NextTimeToFire = Time.time + 1f / FireRate;
+            StartCoroutine(Shoot());
+
+        }
+        if(CurrentAmmo == 0 || (Input.GetKeyDown(KeyCode.R) && CurrentAmmo < maxAmmo))
+        {
+            ScopeWeight = 0;
+            StartCoroutine(Reload());
+        }
+    }
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
         }
         scrollWheel = Mathf.Clamp(scrollWheel, 4, 10);
         if (isScoped)
@@ -114,29 +141,6 @@ public class CameraController : MonoBehaviour
             crosshair.SetActive(true);
             Sencitivity = NormalSencitivity;
         }
-        
-        if (Input.GetButtonDown("Fire1") && CurrentAmmo > 0 && isReloading == false && Time.time >= NextTimeToFire)
-        {
-            recoil.Fire();
-            NextTimeToFire = Time.time + 1f / FireRate;
-            StartCoroutine(Shoot());
-
-        }
-        if(CurrentAmmo == 0 || (Input.GetKeyDown(KeyCode.R) && CurrentAmmo < maxAmmo))
-        {
-            ScopeWeight = 0;
-            StartCoroutine(Reload());
-        }
-    }
-    void FixedUpdate()
-    {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * Sencitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * Sencitivity;
-        xrot -= mouseY;
-        xrot = Mathf.Clamp(xrot, -90f, 90);
-        holder.localRotation = Quaternion.Euler(xrot, 0f, 0f);
-        player.Rotate(Vector3.up * mouseX);
-
     }
     public void ShellPlay ()
     {
