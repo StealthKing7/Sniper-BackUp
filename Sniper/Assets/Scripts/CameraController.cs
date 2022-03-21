@@ -47,6 +47,20 @@ public class CameraController : MonoBehaviour
     public bool HadFired;
     private SoundManeger soundManeger;
     [Space(10)]
+    [Header("Weapon Sway")]
+    [SerializeField]
+    private float SwayResetSmoothing;
+    [SerializeField]
+    private float SwayClampX;
+    [SerializeField]
+    private float SwayClampY;
+    [SerializeField]
+    private Vector3 TargetWeaponRotation;
+    [SerializeField]
+    private Vector3 TargetWeaponRotationVelocity;
+    private Vector3 newWeaponRotation;
+    private Vector3 newWeaponRotationVelocity;
+    [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
     public MultiRotationConstraint ScopeRotationRig;
@@ -76,7 +90,8 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         CurrentAmmo = maxAmmo;
         ammo.text = CurrentAmmo.ToString();
-        recoil = Sniper.GetComponent<Recoil>();             
+        recoil = Sniper.GetComponent<Recoil>();
+        newWeaponRotation = Sniper.transform.localRotation.eulerAngles;
     }
     void Update()
     {
@@ -155,6 +170,11 @@ public class CameraController : MonoBehaviour
             crosshair.SetActive(true);
             Sencitivity = NormalSencitivity;
         }
+
+        TargetWeaponRotation.x = Mathf.Clamp(TargetWeaponRotation.x, -SwayClampX, SwayClampX);
+        TargetWeaponRotation.y = Mathf.Clamp(TargetWeaponRotation.y, -SwayClampY, SwayClampY);
+        TargetWeaponRotation = Vector3.SmoothDamp(TargetWeaponRotation, Vector3.zero, ref TargetWeaponRotationVelocity, SwayResetSmoothing);
+        newWeaponRotation = Vector3.SmoothDamp(newWeaponRotation, TargetWeaponRotation, ref newWeaponRotationVelocity, SwayResetSmoothing);
     }
     public void ShellPlay ()
     {

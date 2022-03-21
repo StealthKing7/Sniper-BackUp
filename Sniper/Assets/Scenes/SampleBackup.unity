@@ -1217,6 +1217,11 @@ MonoBehaviour:
   FireRate: 1
   Shell: {fileID: 8992320538009537907}
   HadFired: 0
+  SwayResetSmoothing: 0.1
+  SwayClampX: 4
+  SwayClampY: 4
+  TargetWeaponRotation: {x: 0, y: 0, z: 0}
+  TargetWeaponRotationVelocity: {x: 0, y: 0, z: 0}
   ScopePositionRig: {fileID: 1173035192}
   ScopeRotationRig: {fileID: 1173035193}
   DampTime: 0.05
