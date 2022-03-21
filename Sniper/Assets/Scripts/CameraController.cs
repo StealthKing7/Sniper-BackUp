@@ -22,11 +22,13 @@ public class CameraController : MonoBehaviour
     public Camera ScopeCam;
     private float scrollWheel = 9f;
     private Camera cam;
+    private float framerate;
+    private float timer; 
     private Recoil recoil;
     private PostProcessVolume volume;
     private DepthOfField blur;
     [SerializeField]
-    private float timeout;
+    private Text fpscounter;
     [SerializeField]
     [Space(10)]
     [Header("Shooting Properties")]
@@ -41,6 +43,7 @@ public class CameraController : MonoBehaviour
     private float CurrentAmmo;
     private float NextTimeToFire = 0f;
     public ParticleSystem Shell;
+    [HideInInspector]
     public bool HadFired;
     private SoundManeger soundManeger;
     [Space(10)]
@@ -58,6 +61,7 @@ public class CameraController : MonoBehaviour
     private Vector3 Force;
     void Awake()
     {
+        Application.targetFrameRate = 60;
         soundManeger = FindObjectOfType<SoundManeger>();
         Instance = this;
         cam = GetComponent<Camera>();
@@ -82,7 +86,17 @@ public class CameraController : MonoBehaviour
         xrot = Mathf.Clamp(xrot, -90f, 90);
         holder.localRotation = Quaternion.Euler(xrot, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
-
+        if (timer > 1f)
+        {
+            framerate = (int)(1f / Time.unscaledDeltaTime);
+            timer = 0f;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+        string fps = framerate + " fps";
+        fpscounter.text = fps;
         float zoomChange = 9;
         if (Input.GetButtonDown("Fire2"))
         {

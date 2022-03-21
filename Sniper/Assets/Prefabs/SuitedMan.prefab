@@ -1619,9 +1619,8 @@ GameObject:
   - component: {fileID: 3690914913702530551}
   - component: {fileID: 1488070868}
   - component: {fileID: 3792910640604231393}
-  - component: {fileID: 3690914913702530550}
   - component: {fileID: 1488070869}
-  - component: {fileID: 9120157412617350359}
+  - component: {fileID: 1406524341282831782}
   m_Layer: 0
   m_Name: SuitedMan
   m_TagString: Untagged
@@ -1706,6 +1705,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Range: 0
+  target: {fileID: 0}
+  speed: 0
 --- !u!195 &3792910640604231393
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1728,19 +1729,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &3690914913702530550
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690914913702530549}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.29, y: 1.85, z: 0.4}
-  m_Center: {x: 0, y: 0.915, z: 0}
 --- !u!114 &1488070869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,8 +1829,8 @@ MonoBehaviour:
   - {fileID: 7974987872926143724}
   - {fileID: 1140446183254274080}
   - {fileID: 8303298670994903889}
---- !u!135 &9120157412617350359
-SphereCollider:
+--- !u!136 &1406524341282831782
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1851,9 +1839,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.26434326
+  m_Height: 1.8439015
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.42195076, z: 0.00999999}
 --- !u!1 &3778644531355703071
 GameObject:
   m_ObjectHideFlags: 0
