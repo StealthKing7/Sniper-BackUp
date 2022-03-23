@@ -844,6 +844,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: a510e0e3e3f2ee94d8831348b2f458d3, type: 2}
     - target: {fileID: 5377349181054115912, guid: 6419795a72aea704d804605e88635ef2, type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377349181054115912, guid: 6419795a72aea704d804605e88635ef2, type: 3}
       propertyPath: m_CullingMode
       value: 2
       objectReference: {fileID: 0}
@@ -1198,13 +1202,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d408f8fe89a2f4981e3ff0fb27d112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AimSencitivity: 10
-  NormalSencitivity: 100
+  AimSencitivity: 1
+  NormalSencitivity: 2
   player: {fileID: 1223508956}
   holder: {fileID: 1282626799}
   crosshair: {fileID: 1584379659}
   ammo: {fileID: 1147461231}
   ScopeCam: {fileID: 245960678}
+  weapon: {fileID: 1774494411}
   fpscounter: {fileID: 829811285}
   Range: 400
   BulletPf: {fileID: 521768602913664210, guid: 20d06170f1c300148acb10878e74f6d3, type: 3}
@@ -1217,11 +1222,7 @@ MonoBehaviour:
   FireRate: 1
   Shell: {fileID: 8992320538009537907}
   HadFired: 0
-  SwayResetSmoothing: 0.1
-  SwayClampX: 4
-  SwayClampY: 4
-  TargetWeaponRotation: {x: 0, y: 0, z: 0}
-  TargetWeaponRotationVelocity: {x: 0, y: 0, z: 0}
+  SwayMultiplier: 1
   ScopePositionRig: {fileID: 1173035192}
   ScopeRotationRig: {fileID: 1173035193}
   DampTime: 0.05

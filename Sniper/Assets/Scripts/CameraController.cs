@@ -27,6 +27,10 @@ public class CameraController : MonoBehaviour
     private Recoil recoil;
     private PostProcessVolume volume;
     private DepthOfField blur;
+    private float mouseX;
+    private float mouseY;
+    [SerializeField]
+    private Transform weapon;
     [SerializeField]
     private Text fpscounter;
     [SerializeField]
@@ -48,18 +52,7 @@ public class CameraController : MonoBehaviour
     private SoundManeger soundManeger;
     [Space(10)]
     [Header("Weapon Sway")]
-    [SerializeField]
-    private float SwayResetSmoothing;
-    [SerializeField]
-    private float SwayClampX;
-    [SerializeField]
-    private float SwayClampY;
-    [SerializeField]
-    private Vector3 TargetWeaponRotation;
-    [SerializeField]
-    private Vector3 TargetWeaponRotationVelocity;
-    private Vector3 newWeaponRotation;
-    private Vector3 newWeaponRotationVelocity;
+    [SerializeField] private float SwayMultiplier;
     [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
@@ -73,6 +66,7 @@ public class CameraController : MonoBehaviour
     public float BulletLifeTime;
     [SerializeField]
     private Vector3 Force;
+
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -91,27 +85,21 @@ public class CameraController : MonoBehaviour
         CurrentAmmo = maxAmmo;
         ammo.text = CurrentAmmo.ToString();
         recoil = Sniper.GetComponent<Recoil>();
-        newWeaponRotation = Sniper.transform.localRotation.eulerAngles;
     }
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * Sencitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * Sencitivity;
+        mouseX = Input.GetAxis("Mouse X") * Sencitivity;
+        mouseY = Input.GetAxis("Mouse Y") * Sencitivity;
         xrot -= mouseY;
         xrot = Mathf.Clamp(xrot, -90f, 90);
         holder.localRotation = Quaternion.Euler(xrot, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
-        if (timer > 1f)
-        {
-            framerate = (int)(1f / Time.unscaledDeltaTime);
-            timer = 0f;
-        }
-        else
-        {
-            timer += Time.deltaTime;
-        }
-        string fps = framerate + " fps";
-        fpscounter.text = fps;
+        float SwaymouseX = Input.GetAxisRaw("Mouse X") * SwayMultiplier;
+        float SwaymouseY = Input.GetAxisRaw("Mouse Y") * SwayMultiplier;
+        Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
+        Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
+        Quaternion TargetRot = rotationX * rotationY;
+        weapon.localRotation = Quaternion.Slerp(weapon.localRotation, TargetRot, DampTime);
         float zoomChange = 9;
         if (Input.GetButtonDown("Fire2"))
         {
@@ -148,6 +136,17 @@ public class CameraController : MonoBehaviour
             Application.Quit();
         }
         scrollWheel = Mathf.Clamp(scrollWheel, 4, 10);
+        if (timer > 1f)
+        {
+            framerate = (int)(1f / Time.unscaledDeltaTime);
+            timer = 0f;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+        string fps = framerate + " fps";
+        fpscounter.text = fps;
         if (isScoped)
         {
             ScopeWeight = 1;
@@ -171,10 +170,6 @@ public class CameraController : MonoBehaviour
             Sencitivity = NormalSencitivity;
         }
 
-        TargetWeaponRotation.x = Mathf.Clamp(TargetWeaponRotation.x, -SwayClampX, SwayClampX);
-        TargetWeaponRotation.y = Mathf.Clamp(TargetWeaponRotation.y, -SwayClampY, SwayClampY);
-        TargetWeaponRotation = Vector3.SmoothDamp(TargetWeaponRotation, Vector3.zero, ref TargetWeaponRotationVelocity, SwayResetSmoothing);
-        newWeaponRotation = Vector3.SmoothDamp(newWeaponRotation, TargetWeaponRotation, ref newWeaponRotationVelocity, SwayResetSmoothing);
     }
     public void ShellPlay ()
     {
