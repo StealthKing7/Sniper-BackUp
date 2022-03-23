@@ -30,6 +30,10 @@ public class CameraController : MonoBehaviour
     private float mouseX;
     private float mouseY;
     [SerializeField]
+    private GameObject Glass;
+    [SerializeField]
+    private GameObject ScopeGlass;
+    [SerializeField]
     private Transform weapon;
     [SerializeField]
     private Text fpscounter;
@@ -105,6 +109,8 @@ public class CameraController : MonoBehaviour
         {
             isScoped = !isScoped;
             recoil.aim = isScoped;
+            Glass.SetActive(!isScoped);
+            ScopeGlass.SetActive(isScoped);
         }
 
         if(Input.mouseScrollDelta.y > 0)
