@@ -1620,7 +1620,6 @@ GameObject:
   - component: {fileID: 1488070868}
   - component: {fileID: 3792910640604231393}
   - component: {fileID: 1488070869}
-  - component: {fileID: 1406524341282831782}
   m_Layer: 0
   m_Name: SuitedMan
   m_TagString: Untagged
@@ -1829,20 +1828,6 @@ MonoBehaviour:
   - {fileID: 7974987872926143724}
   - {fileID: 1140446183254274080}
   - {fileID: 8303298670994903889}
---- !u!136 &1406524341282831782
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690914913702530549}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.26434326
-  m_Height: 1.8439015
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.42195076, z: 0.00999999}
 --- !u!1 &3778644531355703071
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,6 +47,10 @@ public class CameraController : MonoBehaviour
     public LayerMask layer = new LayerMask();
     public float ReloadTime;
     public float FireRate = 15f;
+    [SerializeField]
+    private Vector3 NonScopeOffset;
+    [SerializeField]
+    private Vector3 ScopeOffset;
     private bool isReloading;
     private float CurrentAmmo;
     private float NextTimeToFire = 0f;
@@ -134,14 +138,6 @@ public class CameraController : MonoBehaviour
             ScopeWeight = 0;
             StartCoroutine(Reload());
         }
-    }
-    void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-        scrollWheel = Mathf.Clamp(scrollWheel, 4, 10);
         if (timer > 1f)
         {
             framerate = (int)(1f / Time.unscaledDeltaTime);
@@ -153,6 +149,14 @@ public class CameraController : MonoBehaviour
         }
         string fps = framerate + " fps";
         fpscounter.text = fps;
+    }
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        scrollWheel = Mathf.Clamp(scrollWheel, 4, 10);
         if (isScoped)
         {
             ScopeWeight = 1;
@@ -191,13 +195,21 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Range, layer))
         {
             mousePos += hit.point;
+            if (!isScoped)
+            {
+                mousePos += Random.insideUnitSphere.normalized + NonScopeOffset;
+            }
+            else
+            {
+                mousePos += Random.insideUnitSphere.normalized + ScopeOffset;
+            }
             Vector3 aimDir = (mousePos - firePosition.position).normalized;
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
             GameObject Bullet = Instantiate(BulletPf, firePosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
-            EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
+            EnemyAI enemyAI = hit.transform.GetComponentInParent<EnemyAI>();
             if (enemyAI != null)
             {
                 Debug.Log("Hit");
