@@ -113,8 +113,7 @@ public class CameraController : MonoBehaviour
         {
             isScoped = !isScoped;
             recoil.aim = isScoped;
-            Glass.SetActive(!isScoped);
-            ScopeGlass.SetActive(isScoped);
+           StartCoroutine(ChangeGlass());
         }
 
         if(Input.mouseScrollDelta.y > 0)
@@ -150,6 +149,23 @@ public class CameraController : MonoBehaviour
         string fps = framerate + " fps";
         fpscounter.text = fps;
     }
+
+    private IEnumerator ChangeGlass()
+    {
+        if (isScoped)
+        {
+            yield return new WaitForSeconds(0.0375f);
+            ScopeGlass.SetActive(true);
+            Glass.SetActive(false);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.0375f);
+            Glass.SetActive(true);
+            ScopeGlass.SetActive(false);
+        }
+    }
+
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Escape))
