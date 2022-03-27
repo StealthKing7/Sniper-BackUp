@@ -45,6 +45,8 @@ public class CameraController : MonoBehaviour
     public float maxAmmo;
     public Transform firePosition;
     public LayerMask layer = new LayerMask();
+    [SerializeField]
+    private ParticleSystem muzzleFlash; 
     public float ReloadTime;
     public float FireRate = 15f;
     [SerializeField]
@@ -60,7 +62,14 @@ public class CameraController : MonoBehaviour
     private SoundManeger soundManeger;
     [Space(10)]
     [Header("Weapon Sway")]
-    [SerializeField] private float SwayMultiplier;
+    [SerializeField]
+    private float SwayMultiplier;
+    [SerializeField]
+    private float SwayDampTime;
+    [SerializeField]
+    private float BreathSwayX;
+    [SerializeField]
+    private float BreathSwayY;
     [Space(10)]
     [Header("Animation Rigging")]
     public MultiPositionConstraint ScopePositionRig;
@@ -107,7 +116,7 @@ public class CameraController : MonoBehaviour
         Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
         Quaternion TargetRot = rotationX * rotationY;
-        weapon.localRotation = Quaternion.Slerp(weapon.localRotation, TargetRot, DampTime);
+        weapon.localRotation = Quaternion.Slerp(weapon.localRotation, TargetRot, SwayDampTime);
         float zoomChange = 9;
         if (Input.GetButtonDown("Fire2"))
         {
@@ -148,6 +157,11 @@ public class CameraController : MonoBehaviour
         }
         string fps = framerate + " fps";
         fpscounter.text = fps;
+
+        float breathSwayX = Random.Range(-BreathSwayX, BreathSwayX);
+        float breathSwayY = Random.Range(-BreathSwayX, BreathSwayX);
+        Quaternion rotation = Quaternion.Euler(breathSwayX, breathSwayY, 0f);
+        transform.localRotation = rotation;
     }
 
     private IEnumerator ChangeGlass()
@@ -195,7 +209,6 @@ public class CameraController : MonoBehaviour
             crosshair.SetActive(true);
             Sencitivity = NormalSencitivity;
         }
-
     }
     public void ShellPlay ()
     {
@@ -203,6 +216,10 @@ public class CameraController : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        if (!isScoped)
+        {
+            muzzleFlash.Play();
+        }
         HadFired = true;
         CurrentAmmo--;
         Vector3 mousePos = Vector3.zero;
@@ -211,13 +228,13 @@ public class CameraController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, Range, layer))
         {
             mousePos += hit.point;
-            if (!isScoped)
+            if (isScoped)
             {
-                mousePos += Random.insideUnitSphere.normalized + NonScopeOffset;
+                mousePos += Random.insideUnitSphere.normalized + ScopeOffset;
             }
             else
             {
-                mousePos += Random.insideUnitSphere.normalized + ScopeOffset;
+                mousePos += Random.insideUnitSphere.normalized + NonScopeOffset;
             }
             Vector3 aimDir = (mousePos - firePosition.position).normalized;
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
@@ -235,7 +252,9 @@ public class CameraController : MonoBehaviour
                 {
                     rb.AddForce(Force);
                 }
+
             }
+            Debug.DrawRay(firePosition.position, aimDir, Color.red, 5);
         }
         animator.SetBool("Bolt",true);
         yield return new WaitForSeconds(0.5f - 0.25f);

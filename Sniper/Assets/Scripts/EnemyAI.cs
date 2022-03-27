@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private List<Rigidbody> Ragdoll = new List<Rigidbody>();
+    private List<Rigidbody> RagdollRB = new List<Rigidbody>();
     private NavMeshAgent agent;
     private Animator animator;
     [SerializeField]
@@ -30,16 +30,17 @@ public class EnemyAI : MonoBehaviour
             if (r.gameObject != gameObject)
             {
                 r.isKinematic = true;
-                Ragdoll.Add(r);
+                RagdollRB.Add(r);
             }
         }
     }
     public void TrunOnRagdoll()
     {
-        foreach (Rigidbody r in Ragdoll)
+        foreach (Rigidbody r in RagdollRB)
         {
             r.isKinematic = false;
         }
+
         animator.enabled = false;
         agent.isStopped = true;
     }

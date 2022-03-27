@@ -5,13 +5,13 @@ public class Bullet : MonoBehaviour
     private float bulletSpeed;
     private Vector3 force;
     private Rigidbody rb;
-    public void Initialized(float speed,Vector3 _force)
+    public void Initialized(float speed, Vector3 _force)
     {
         bulletSpeed = speed;
         force = _force;
     }
     private void Awake()
-    { 
+    {
         rb = GetComponent<Rigidbody>();
     }
     private void Start()
@@ -20,7 +20,8 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
         Destroy(gameObject);
     }
 }
+    
+
