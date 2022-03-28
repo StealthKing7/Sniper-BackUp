@@ -7,6 +7,7 @@ public class Sound
     public AudioClip clip;
     public float pitch;
     public float volume;
+    public bool Loop;
     [HideInInspector]
     public AudioSource audioSource;
 }

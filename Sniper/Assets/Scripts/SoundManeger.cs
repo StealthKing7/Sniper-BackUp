@@ -16,6 +16,7 @@ public class SoundManeger : MonoBehaviour
             s.audioSource = sound.AddComponent<AudioSource>();
             s.audioSource.clip = s.clip;
             s.audioSource.volume = s.volume;
+            s.audioSource.loop = s.Loop;
             s.audioSource.pitch = s.pitch;
         }
     }

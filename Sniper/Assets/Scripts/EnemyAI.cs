@@ -4,7 +4,8 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private List<Rigidbody> RagdollRB = new List<Rigidbody>();
+    [SerializeField]
+    private List<Collider> Ragdoll = new List<Collider>();
     private NavMeshAgent agent;
     private Animator animator;
     [SerializeField]
@@ -24,27 +25,27 @@ public class EnemyAI : MonoBehaviour
     }
     void SetRagDollOff()
     {
-        Rigidbody[] ragdoll = gameObject.GetComponentsInChildren<Rigidbody>();
-        foreach (Rigidbody r in ragdoll)
+        Collider[] ragdoll = gameObject.GetComponentsInChildren<Collider>();
+        foreach (Collider c in ragdoll)
         {
-            if (r.gameObject != gameObject)
+            if (c.gameObject != gameObject)
             {
-                r.isKinematic = true;
-                RagdollRB.Add(r);
+                c.isTrigger = true;
+                Ragdoll.Add(c);
             }
         }
     }
     public void TrunOnRagdoll()
     {
-        foreach (Rigidbody r in RagdollRB)
+        foreach (Collider c in Ragdoll)
         {
-            r.isKinematic = false;
+            c.isTrigger = false;
         }
 
         animator.enabled = false;
         agent.isStopped = true;
     }
-    
+
     void Update()
     {
         float dis = Vector3.Distance(transform.position, cameraController.gameObject.transform.position);
@@ -53,10 +54,5 @@ public class EnemyAI : MonoBehaviour
             agent.SetDestination(target.position);
             animator.SetBool("Run", true);
         }
-    }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, Range);
     }
 }

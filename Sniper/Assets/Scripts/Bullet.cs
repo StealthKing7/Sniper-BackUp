@@ -20,7 +20,24 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        Debug.Log("vfds");
+        Debug.Log(other.gameObject.name,other.gameObject);
+        EnemyAI enemyAI = other.GetComponentInParent<EnemyAI>();
+        if (enemyAI != null)
+        {
+            Debug.Log("Hit");
+            enemyAI.TrunOnRagdoll();
+            Rigidbody[] rbs = enemyAI.GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody rb in rbs)
+            {
+                rb.AddForce(force);
+            }
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
     

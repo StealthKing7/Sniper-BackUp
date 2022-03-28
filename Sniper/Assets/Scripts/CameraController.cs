@@ -158,8 +158,26 @@ public class CameraController : MonoBehaviour
         string fps = framerate + " fps";
         fpscounter.text = fps;
 
-        float breathSwayX = Random.Range(-BreathSwayX, BreathSwayX);
-        float breathSwayY = Random.Range(-BreathSwayX, BreathSwayX);
+        float breathSwayX = Time.time;
+        float breathSwayY = Time.time; 
+        breathSwayX = Mathf.Clamp(breathSwayX, -BreathSwayX, BreathSwayX);
+        breathSwayX = Mathf.Clamp(breathSwayY, -BreathSwayY, BreathSwayY);
+        if(breathSwayX >= BreathSwayX)
+        {
+            breathSwayX -= Time.time;
+        }
+        else
+        {
+            breathSwayX += Time.time;
+        }
+        if (breathSwayY >= BreathSwayY)
+        {
+            breathSwayY -= Time.time;
+        }
+        else
+        {
+            breathSwayY += Time.time;
+        }
         Quaternion rotation = Quaternion.Euler(breathSwayX, breathSwayY, 0f);
         transform.localRotation = rotation;
     }
@@ -216,12 +234,13 @@ public class CameraController : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        HadFired = true;
         if (!isScoped)
         {
             muzzleFlash.Play();
         }
-        HadFired = true;
         CurrentAmmo--;
+        soundManeger.Play("Shoot");
         Vector3 mousePos = Vector3.zero;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
         Ray ray = cam.ScreenPointToRay(ScreenCenter);
@@ -242,19 +261,7 @@ public class CameraController : MonoBehaviour
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
-            EnemyAI enemyAI = hit.transform.GetComponentInParent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                Debug.Log("Hit");
-                enemyAI.TrunOnRagdoll();
-                Rigidbody[] rbs = enemyAI.GetComponentsInChildren<Rigidbody>();
-                foreach (Rigidbody rb in rbs)
-                {
-                    rb.AddForce(Force);
-                }
-
-            }
-            Debug.DrawRay(firePosition.position, aimDir, Color.red, 5);
+            //Debug.DrawRay(firePosition.position, aimDir, Color.red, 5);
         }
         animator.SetBool("Bolt",true);
         yield return new WaitForSeconds(0.5f - 0.25f);
@@ -295,9 +302,5 @@ public class CameraController : MonoBehaviour
         CurrentAmmo = maxAmmo;
         isReloading = false;
     }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, Range);
-    }
+
 }
