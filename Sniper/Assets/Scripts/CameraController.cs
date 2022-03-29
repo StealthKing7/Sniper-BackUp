@@ -241,12 +241,12 @@ public class CameraController : MonoBehaviour
         }
         CurrentAmmo--;
         soundManeger.Play("Shoot");
-        Vector3 mousePos = Vector3.zero;
+        Vector3 mousePos;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
         Ray ray = cam.ScreenPointToRay(ScreenCenter);
         if (Physics.Raycast(ray, out RaycastHit hit, Range, layer))
         {
-            mousePos += hit.point;
+            mousePos = hit.point;
             if (isScoped)
             {
                 mousePos += Random.insideUnitSphere.normalized + ScopeOffset;
@@ -261,7 +261,17 @@ public class CameraController : MonoBehaviour
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);
-            //Debug.DrawRay(firePosition.position, aimDir, Color.red, 5);
+            EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                Debug.Log("Hit");
+                enemyAI.TrunOnRagdoll();
+                Rigidbody[] rbs = enemyAI.GetComponentsInChildren<Rigidbody>();
+                foreach (Rigidbody rb in rbs)
+                {
+                    rb.AddForce(Force);
+                }
+            }
         }
         animator.SetBool("Bolt",true);
         yield return new WaitForSeconds(0.5f - 0.25f);

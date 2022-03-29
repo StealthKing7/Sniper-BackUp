@@ -1653,6 +1653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ed7b4d921607d449314944161f3bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ragdoll: []
   Range: 0
   target: {fileID: 0}
   speed: 0

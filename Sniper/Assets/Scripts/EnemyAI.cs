@@ -6,8 +6,10 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField]
     private List<Collider> Ragdoll = new List<Collider>();
-    private NavMeshAgent agent;
+    [SerializeField]
+    private CapsuleCollider capsuleCollider;
     private Animator animator;
+    private NavMeshAgent agent;
     [SerializeField]
     private float Range;
     private CameraController cameraController;
@@ -34,18 +36,18 @@ public class EnemyAI : MonoBehaviour
                 Ragdoll.Add(c);
             }
         }
+        capsuleCollider.isTrigger = false;
     }
     public void TrunOnRagdoll()
     {
+        animator.enabled = false;
         foreach (Collider c in Ragdoll)
         {
             c.isTrigger = false;
         }
-
-        animator.enabled = false;
+        capsuleCollider.isTrigger = true;
         agent.isStopped = true;
     }
-
     void Update()
     {
         float dis = Vector3.Distance(transform.position, cameraController.gameObject.transform.position);

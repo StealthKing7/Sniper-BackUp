@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 898012288922859112}
-  - component: {fileID: -5436103761736397670}
   - component: {fileID: 2328841561684389567}
+  - component: {fileID: -5436103761736397670}
   - component: {fileID: -6533865420422451103}
   m_Layer: 0
   m_Name: Bala Variant
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2328841561684389567
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521768602913664210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.045092463
+  m_Height: 0.2280482
+  m_Direction: 2
+  m_Center: {x: 0, y: -0.008833557, z: 0.5142028}
 --- !u!54 &-5436103761736397670
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -50,21 +64,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 3
---- !u!136 &2328841561684389567
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521768602913664210}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.045092463
-  m_Height: 0.2280482
-  m_Direction: 2
-  m_Center: {x: 0, y: -0.008833557, z: 0.5142028}
+  m_CollisionDetection: 2
 --- !u!114 &-6533865420422451103
 MonoBehaviour:
   m_ObjectHideFlags: 0
