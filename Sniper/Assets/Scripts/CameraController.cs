@@ -257,7 +257,7 @@ public class CameraController : MonoBehaviour
             }
             Vector3 aimDir = (mousePos - firePosition.position).normalized;
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
-            GameObject Bullet = Instantiate(BulletPf, firePosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            GameObject Bullet = Instantiate(BulletPf, firePosition.forward, Quaternion.LookRotation(aimDir, Vector3.up));
             Bullet bullet = Bullet.GetComponent<Bullet>();
             bullet.Initialized(bulletSpeed, Force);
             Destroy(Bullet, BulletLifeTime);

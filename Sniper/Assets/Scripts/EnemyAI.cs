@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
     private List<Collider> Ragdoll = new List<Collider>();
     [SerializeField]
     private CapsuleCollider capsuleCollider;
+    [SerializeField]
+    private Rigidbody rb;
     private Animator animator;
     private NavMeshAgent agent;
     [SerializeField]
@@ -37,6 +39,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
         capsuleCollider.isTrigger = false;
+        rb.isKinematic = false;
     }
     public void TrunOnRagdoll()
     {
@@ -46,6 +49,7 @@ public class EnemyAI : MonoBehaviour
             c.isTrigger = false;
         }
         capsuleCollider.isTrigger = true;
+        rb.isKinematic = true;
         agent.isStopped = true;
     }
     void Update()
@@ -57,4 +61,12 @@ public class EnemyAI : MonoBehaviour
             animator.SetBool("Run", true);
         }
     }
+    /*private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(other.gameObject.name);
+        if (other.gameObject.tag == "Bullet")
+        {
+            Debug.Log("Got Hit");
+        }
+    }*/
 }
