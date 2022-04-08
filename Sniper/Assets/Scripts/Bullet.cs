@@ -5,10 +5,10 @@ public class Bullet : MonoBehaviour
     private float bulletSpeed;
     private Vector3 force;
     private Rigidbody rb;
-    public void Initialized(float speed, Vector3 _force)
+    public void Initialized(float speed)
     {
         bulletSpeed = speed;
-        force = _force;
+
     }
     private void Awake()
     {
@@ -20,6 +20,16 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        EnemyAI enemyAI = other.gameObject.GetComponent<EnemyAI>();
+        if(enemyAI != null)
+        {
+            Debug.Log("found");
+            enemyAI.TrunOnRagdoll();
+        }
+        else
+        {
+            Debug.Log("not found");
+        }
         Destroy(gameObject);
     }
 }

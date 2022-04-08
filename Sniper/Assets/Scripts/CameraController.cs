@@ -1,5 +1,6 @@
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
@@ -122,7 +123,7 @@ public class CameraController : MonoBehaviour
         {
             isScoped = !isScoped;
             recoil.aim = isScoped;
-           StartCoroutine(ChangeGlass());
+            StartCoroutine(ChangeGlass());
         }
 
         if(Input.mouseScrollDelta.y > 0)
@@ -157,29 +158,10 @@ public class CameraController : MonoBehaviour
         }
         string fps = framerate + " fps";
         fpscounter.text = fps;
-
-        float breathSwayX = Time.time;
-        float breathSwayY = Time.time; 
-        breathSwayX = Mathf.Clamp(breathSwayX, -BreathSwayX, BreathSwayX);
-        breathSwayX = Mathf.Clamp(breathSwayY, -BreathSwayY, BreathSwayY);
-        if(breathSwayX >= BreathSwayX)
+        if (Input.GetKey(KeyCode.A))
         {
-            breathSwayX -= Time.time;
+            SceneManager.LoadScene(0);
         }
-        else
-        {
-            breathSwayX += Time.time;
-        }
-        if (breathSwayY >= BreathSwayY)
-        {
-            breathSwayY -= Time.time;
-        }
-        else
-        {
-            breathSwayY += Time.time;
-        }
-        Quaternion rotation = Quaternion.Euler(breathSwayX, breathSwayY, 0f);
-        transform.localRotation = rotation;
     }
 
     private IEnumerator ChangeGlass()
@@ -241,37 +223,18 @@ public class CameraController : MonoBehaviour
         }
         CurrentAmmo--;
         soundManeger.Play("Shoot");
-        Vector3 mousePos;
+        Vector3 mousePos = Vector3.zero;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
-        Ray ray = cam.ScreenPointToRay(ScreenCenter);
+        Ray ray = Camera.main.ScreenPointToRay(ScreenCenter);
         if (Physics.Raycast(ray, out RaycastHit hit, Range, layer))
         {
             mousePos = hit.point;
-            if (isScoped)
-            {
-                mousePos += Random.insideUnitSphere.normalized + ScopeOffset;
-            }
-            else
-            {
-                mousePos += Random.insideUnitSphere.normalized + NonScopeOffset;
-            }
             Vector3 aimDir = (mousePos - firePosition.position).normalized;
             Debug.DrawLine(firePosition.position, mousePos, Color.red, 5f);
-            GameObject Bullet = Instantiate(BulletPf, firePosition.forward, Quaternion.LookRotation(aimDir, Vector3.up));
-            Bullet bullet = Bullet.GetComponent<Bullet>();
-            bullet.Initialized(bulletSpeed, Force);
-            Destroy(Bullet, BulletLifeTime);
-            EnemyAI enemyAI = hit.transform.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                Debug.Log("Hit");
-                enemyAI.TrunOnRagdoll();
-                Rigidbody[] rbs = enemyAI.GetComponentsInChildren<Rigidbody>();
-                foreach (Rigidbody rb in rbs)
-                {
-                    rb.AddForce(Force);
-                }
-            }
+            GameObject bullet = Instantiate(BulletPf, firePosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            Bullet bulletsc = bullet.GetComponent<Bullet>();
+            bulletsc.Initialized(bulletSpeed);
+            Destroy(bullet, BulletLifeTime);
         }
         animator.SetBool("Bolt",true);
         yield return new WaitForSeconds(0.5f - 0.25f);
