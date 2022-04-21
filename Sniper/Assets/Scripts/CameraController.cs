@@ -51,6 +51,8 @@ public class CameraController : MonoBehaviour
     public float ReloadTime;
     public float FireRate = 15f;
     [SerializeField]
+    private Vector3 recooilOffset;
+    [SerializeField]
     private Vector3 NonScopeOffset;
     [SerializeField]
     private Vector3 ScopeOffset;
@@ -223,6 +225,7 @@ public class CameraController : MonoBehaviour
         }
         CurrentAmmo--;
         soundManeger.Play("Shoot");
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(recooilOffset), DampTime);
         Vector3 mousePos = Vector3.zero;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
         Ray ray = Camera.main.ScreenPointToRay(ScreenCenter);
@@ -236,10 +239,12 @@ public class CameraController : MonoBehaviour
             bulletsc.Initialized(bulletSpeed);
             Destroy(bullet, BulletLifeTime);
         }
-        animator.SetBool("Bolt",true);
+        animator.SetBool("Bolt", true);
         yield return new WaitForSeconds(0.5f - 0.25f);
         animator.SetBool("Bolt", false);
         yield return new WaitForSeconds(0.25f);
+        transform.localRotation = Quaternion.Slerp(Quaternion.Euler(recooilOffset), Quaternion.identity, DampTime);
+
     }
     void BoltUp()
     {
