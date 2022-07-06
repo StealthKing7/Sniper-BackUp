@@ -51,10 +51,6 @@ public class CameraController : MonoBehaviour
     public float ReloadTime;
     public float FireRate = 15f;
     [SerializeField]
-    private Vector3 recooilOffset;
-    [SerializeField]
-    private Vector3 NonScopeOffset;
-    [SerializeField]
     private Vector3 ScopeOffset;
     private bool isReloading;
     private float CurrentAmmo;
@@ -89,7 +85,7 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 100;
         soundManeger = FindObjectOfType<SoundManeger>();
         Instance = this;
         cam = GetComponent<Camera>();
@@ -225,7 +221,7 @@ public class CameraController : MonoBehaviour
         }
         CurrentAmmo--;
         soundManeger.Play("Shoot");
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(recooilOffset), DampTime);
+        //transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(recooilOffset), DampTime);
         Vector3 mousePos = Vector3.zero;
         Vector3 ScreenCenter = new Vector3(Screen.width / 2f, Screen.height / 2);
         Ray ray = Camera.main.ScreenPointToRay(ScreenCenter);
@@ -243,7 +239,7 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(0.5f - 0.25f);
         animator.SetBool("Bolt", false);
         yield return new WaitForSeconds(0.25f);
-        transform.localRotation = Quaternion.Slerp(Quaternion.Euler(recooilOffset), Quaternion.identity, DampTime);
+       //transform.localRotation = Quaternion.Slerp(Quaternion.Euler(recooilOffset), Quaternion.identity, DampTime);
 
     }
     void BoltUp()
