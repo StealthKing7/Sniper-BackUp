@@ -6705,7 +6705,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
+    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6715,7 +6715,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
+    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6725,7 +6725,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
+    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6885,7 +6885,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
+    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6895,7 +6895,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
+    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -6905,7 +6905,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Arms/R_arm/R_elbow/R_wrist/R_pink1
+    path: Recoil Center/Recoil Position/Recoil Rotation/Sniper
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 1
